@@ -19,6 +19,22 @@ const sql_create = `CREATE TABLE IF NOT EXISTS Books (
   Comments TEXT
 );`;
 
+// Clients
+const db_name_client = path.join(__dirname, "data", "clients.db");
+const db_client = new sqlite3.Database(db_name_client, err => {
+  if (err) {
+    return console.error(err.message);
+  }
+  console.log("Successful connection to the database 'client.db'");
+});
+
+const sql_createClient = `CREATE TABLE IF NOT EXISTS Clients (
+  Client_ID INTEGER PRIMARY KEY AUTOINCREMENT,
+  FirtName VARCHAR(100) NOT NULL,
+  ServiceName VARCHAR(100) NOT NULL,
+  PriceService DECIMAL(16,2) DEFAULT '0.00' NOT NULL
+);`;
+
 db.run(sql_create, err => {
   if (err) {
     return console.error(err.message);
@@ -39,15 +55,34 @@ db.run(sql_create, err => {
   });
 });
 
+// Clients Create Table
+db.run(sql_createClient, err => {
+  if (err) {
+    return console.error(err.message);
+  }
+  console.log("Successful creation of the 'Clients' table");
+
+  // Database seeding
+  const sql_insert = `INSERT INTO Clients (Client_ID, FirtName, ServiceName, PriceService) VALUES
+  (1, 'Mrs. Bridge', 'Dev Web', 150.00),
+  (2, 'Mr. Bridge', 'Dev Web', 2800.00),
+  (3, 'libertine', 'MK Digital', 785.00);`;
+
+  db.run(sql_insert, err => {
+    if (err) {
+      return console.error(err.message);
+    }
+    console.log("Successful creation of 3 Clients");
+  });
+});
+
 // Basic Server
 const app = express();
 
 // Settings EJS
 app.set("view engine", "ejs");
-// app.set("views", __dirname + "/views");
 app.set("views", path.join(__dirname, "views"));
 app.use(express.urlencoded({ extended: false })); // <--- middleware configuration
-// Files CSS
 app.use(express.static(path.join(__dirname, "public")));
 
 // Routes
@@ -77,6 +112,16 @@ app.get("/books", (req, res) => {
   });
 });
 
+app.get("/clients", (req, res) => {
+  const sql = "SELECT * FROM Clients ORDER BY FirtName";
+  db.all(sql, [], (err, rows) => {
+    if (err) {
+      return console.error(err.message);
+    }
+    res.render("clients", { model: rows });
+  });
+});
+
 // GET /edit/5
 app.get("/edit/:id", (req, res) => {
   const id = req.params.id;
@@ -84,6 +129,18 @@ app.get("/edit/:id", (req, res) => {
   db.get(sql, id, (err, row) => {
     // if (err) ...
     res.render("edit", { model: row });
+  });
+});
+
+app.get("/clients/edit/:id", (req, res) => {
+  const id = req.params.id;
+  const sql = "SELECT * FROM Clients WHERE Client_ID = ?";
+  db.get(sql, id, (err, row) => {
+    if (err) {
+      return console.log(err.message);
+    } else {
+      res.render("editClient", { model: row });
+    }
   });
 });
 
@@ -96,6 +153,20 @@ app.post("/edit/:id", (req, res) => {
   db.run(sql, book, err => {
     // if (err) ...
     res.redirect("/books");
+  });
+});
+
+app.post("/clients/edit/:id", (req, res) => {
+  const id = req.params.id;
+  const book = [req.body.Title, req.body.Author, req.body.Comments, id];
+  const sql =
+    "UPDATE Clients SET FirtName = ?, ServiceName = ?, PriceService = ? WHERE (Client_ID = ?)";
+  db.run(sql, book, err => {
+    if (err) {
+      return console.log(err.message);
+    } else {
+      res.redirect("/clients");
+    }
   });
 });
 
