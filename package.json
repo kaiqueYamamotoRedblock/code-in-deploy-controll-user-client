@@ -1,0 +1,19 @@
+{
+  "name": "code-in-deploy-controll-user-client",
+  "version": "1.0.0",
+  "main": "server.js",
+  "repository": "https://github.com/kaiqueYamamotoRedblock/code-in-deploy-controll-user-client.git",
+  "author": "kaiqueyamamotoredblock <yamamoto.kaique.silva@redblock.com.br>",
+  "license": "MIT",
+  "scripts": {
+    "start": "nodemon src/server.js"
+  },
+  "dependencies": {
+    "ejs": "^3.0.1",
+    "express": "^4.17.1",
+    "sqlite3": "^4.1.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.2"
+  }
+}
