@@ -174,12 +174,21 @@ app.post("/clients/edit/:id", (req, res) => {
 app.get("/create", (req, res) => {
   res.render("create", { model: {} });
 });
+app.get("/clients/create", (req, res) => {
+  res.redirect("createCliente", { model: {} });
+});
 
 app.get("/create", (req, res) => {
   const book = {
     Author: "Victor Hugo"
   };
   res.render("create", { model: book });
+});
+app.get("/clients/create", (req, res) => {
+  const cliente = {
+    FirtName: "Kaique Yamamoto "
+  };
+  res.render("createClient", {model: cliente})
 });
 
 // POST /create
@@ -191,6 +200,17 @@ app.post("/create", (req, res) => {
     res.redirect("/books");
   });
 });
+app.post("/clients/create", (req, res) => {
+  const sql = "INSERT INTO Clients (FirtName, ServiceName, PriceService) VALUES (?, ?, ?)";
+  const book = [req.body.Title, req.body.Author, req.body.Comments];
+  db.run(sql, book, err => {
+    if (err) {
+      return console.log(err.message)
+    } else {
+      res.redirect("/clients")
+    }
+  });
+})
 
 // GET /delete/5
 app.get("/delete/:id", (req, res) => {
@@ -201,6 +221,19 @@ app.get("/delete/:id", (req, res) => {
     res.render("delete", { model: row });
   });
 });
+app.get("/clients/delete/:id", (req, res) => {
+
+  const id = req.params.id
+  const sql = "SELECT * FROM Clients WHERE Client_ID = ?";
+  db.get(sql, id, (err, row) => {
+    if (err) {
+      return console.log(err.message)
+    } else {
+      res.render("deleteCliente", {model: row})
+    }
+  })
+
+})
 
 // POST /delete/5
 app.post("/delete/:id", (req, res) => {
@@ -211,8 +244,19 @@ app.post("/delete/:id", (req, res) => {
     res.redirect("/books");
   });
 });
+app.post("/clients/delete/:id", (req, res) => {
+  const id = req.params.id;
+  const sql = "DELETE FROM Clients WHERE Client_ID = ?";
+  db.run(sql, id, err => {
+    if (err) {
+      return console.log(err.message)
+    } else {
+      res.redirect("/clients")
+    }
+  })
+})
 
-// Port
+// Port Server
 app.listen(3000, () => {
   console.log("Basic Server UP");
 });
