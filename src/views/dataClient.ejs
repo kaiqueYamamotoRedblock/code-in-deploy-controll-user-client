@@ -1,0 +1,53 @@
+<%- include("_header") -%>
+<section style="padding: 25px;"></section>
+<div class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-primary">
+            <h4 class="card-title ">Lista de Clientes</h4>
+            <p class="card-category">
+              Quantidade de cliente: <%= model.length %>
+            </p>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table">
+                <thead class=" text-primary">
+                  <th>
+                    ID
+                  </th>
+                  <th>
+                    Nome do Cliente
+                  </th>
+                  <th>
+                    Serviço
+                  </th>
+                  <th>
+                    Valor do Serviço
+                  </th>
+                </thead>
+                <tbody>
+                  <% for (const client of model) { %>
+                  <tr>
+                    <td><%= client.Client_ID %></td>
+                    <td><%= client.FirtName %></td>
+                    <td><%= client.ServiceName %></td>
+                    <td class="text-primary">
+                      R$ <%= client.PriceService %>
+                    </td>
+                  </tr>
+                  <% } %>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section style="padding: 50px;"></section>
+<%- include("_footer") -%>

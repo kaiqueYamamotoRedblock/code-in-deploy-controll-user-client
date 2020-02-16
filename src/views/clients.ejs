@@ -22,10 +22,10 @@
                     Serviço
                   </th>
                   <th>
-                    Salary
+                    Valor do Serviço
                   </th>
                   <th class="d-print-none">
-                    <a class="btn btn-sm btn-success" href="/createClient"
+                    <a class="btn btn-sm btn-success" href="/clients/create"
                       >Add</a
                     >
                   </th>
@@ -36,7 +36,7 @@
                     <td><%= client.FirtName %></td>
                     <td><%= client.ServiceName %></td>
                     <td class="text-primary">
-                      <%= client.PriceService %>
+                      R$ <%= client.PriceService %>
                     </td>
                     <td class="d-print-none">
                       <a
