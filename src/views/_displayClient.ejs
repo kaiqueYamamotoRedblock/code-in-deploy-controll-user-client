@@ -1,39 +1,58 @@
-<div class="form-group row">
-  <label class="col-form-label col-sm-2" for="Title">Title</label>
-  <div class="col-sm-8">
-    <input
-      readonly
-      class="form-control"
-      id="Title"
-      value="<%= model.FirtName %>"
-    />
-  </div>
-</div>
+<div class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-primary">
+            <h4 class="card-title ">Delete Client</h4>
+            <p class="card-category">
+              Cuidado para não deletar o usuario ou cliente errado
+            </p>
+          </div>
+          <div class="card-body">
+            <form>
+              <div class="form-row">
+                <div class="form-group col-md-6">
+                  <label for="Title">Nome do Cliente</label>
+                  <input
+                    readonly
+                    class="form-control"
+                    name="Title"
+                    value="<%= model.FirtName %>"
+                  />
+                </div>
+                <div class="form-group col-md-6">
+                  <label for="Author">Tipo de Serviço</label>
+                  <input
+                    readonly
+                    class="form-control"
+                    name="Author"
+                    value="<%= model.ServiceName %>"
+                  />
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="Comments">Valor do Serviço</label>
+                <input
+                  readonly
+                  type="text"
+                  class="form-control"
+                  placeholder="Valor do Serviço"
+                  name="Comments"
+                  value="<%= model.PriceService %>"
+                />
+              </div>
 
-<div class="form-group row">
-  <label class="col-form-label col-sm-2" for="Author">Author</label>
-  <div class="col-sm-7">
-    <input
-      readonly
-      class="form-control"
-      id="Author"
-      value="<%= model.ServiceName %>"
-    />
-  </div>
-</div>
-
-<div class="form-group row">
-  <label class="col-form-label col-sm-2" for="Comments">Comments</label>
-  <div class="col-sm-10">
-    <textarea
-      readonly
-      class="form-control"
-      cols="20"
-      id="Comments"
-      maxlength="32000"
-      rows="7"
-    >
-  <%= model.PriceService %></textarea
-    >
+              <div>
+                <input type="submit" value="Delete" class="btn btn-danger" />
+                <a class="btn btn-outline-dark cancel" href="/clients"
+                  >Cancel</a
+                >
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

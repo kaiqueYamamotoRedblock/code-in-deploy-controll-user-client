@@ -4,7 +4,7 @@
       <div class="col-md-12">
         <div class="card">
           <div class="card-header card-header-primary">
-            <h4 class="card-title ">Edit User</h4>
+            <h4 class="card-title ">Create User</h4>
             <p class="card-category">
               Adicione as informações do usuario a baixo
             </p>
@@ -15,9 +15,10 @@
                 <div class="form-group col-md-6">
                   <label for="Title">Nome do Cliente</label>
                   <input
+                    autofocus
                     class="form-control"
                     name="Title"
-                    value="<%= model.FirtName %>"
+                    value="<%= model.Title %>"
                   />
                 </div>
                 <div class="form-group col-md-6">
@@ -25,7 +26,7 @@
                   <input
                     class="form-control"
                     name="Author"
-                    value="<%= model.ServiceName %>"
+                    value="<%= model.Author %>"
                   />
                 </div>
               </div>

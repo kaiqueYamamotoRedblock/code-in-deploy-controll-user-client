@@ -66,13 +66,15 @@ db.run(sql_createClient, err => {
   const sql_insert = `INSERT INTO Clients (Client_ID, FirtName, ServiceName, PriceService) VALUES
   (1, 'Mrs. Bridge', 'Dev Web', 150.00),
   (2, 'Mr. Bridge', 'Dev Web', 2800.00),
-  (3, 'libertine', 'MK Digital', 785.00);`;
+  (3, 'libertine', 'MK Digital', 785.00),
+  (4, 'fulano de tal', 'Dev Mobile', 7800),
+  (5, 'fulano', 'Dev React', 8000);`;
 
   db.run(sql_insert, err => {
     if (err) {
       return console.error(err.message);
     }
-    console.log("Successful creation of 3 Clients");
+    console.log("Successful creation of 5 Clients");
   });
 });
 
@@ -150,6 +152,7 @@ app.get("/clients/edit/:id", (req, res) => {
     if (err) {
       return console.log(err.message);
     } else {
+      console.log(row);
       res.render("editClient", { model: row });
     }
   });
